@@ -1,20 +1,78 @@
+interface GameConfig {
+    board: {x: number, y: number};
+    ships: Array<number>;
+};
+
+const defaultGameConfig: GameConfig = {
+    board: {x: 10, y: 10},
+    ships: [5, 4, 4, 3, 3, 3, 2,]
+};
+
 function randomIntFromInterval(min,max) {// min and max included
     return Math.floor(Math.random()*(max-min+1)+min);
 }
 
 class Board {
-    rows:number;
-    columns:number;
+    get rows(): number {
+        return this.config.board.x;
+    };
+    get columns(): number {
+        return this.config.board.y;
+    };
     ship_x:number;
     ship_y:number;
     board:string[][];
     shipfloats:boolean;
 
-    constructor(rows, columns) {
-        this.rows = rows;
-        this.columns = columns;
-        this.ship_x = randomIntFromInterval(0, columns - 1);
-        this.ship_y = randomIntFromInterval(0, rows - 1);
+    shipPositions: Array<Array<number>> = [];
+    config: GameConfig
+
+    constructor(config: GameConfig = defaultGameConfig) {
+        this.config = config;
+        this.ship_x = randomIntFromInterval(0, this.columns - 1);
+        this.ship_y = randomIntFromInterval(0, this.rows - 1);
+    }
+
+    generateShip(length: number) {
+        // obtener seed
+        let x = randomIntFromInterval(0, this.rows);
+        let y = randomIntFromInterval(0, this.columns);
+
+        // obtener orientaciÃ³n
+        let axis = randomIntFromInterval(0, 1) == 0 ? x : y;
+        
+        // construir
+        let positions: Array<Array<Number>> = [];
+        for (let i = 0; i < length; i++) {
+            axis++;
+            positions.push([x, y])
+        }
+
+        // detectar colisiÃ³n
+        console.log(this.shipPositions);
+        let hasCollision = this.shipPositions
+            .map(p => {
+                console.log(p);
+                return positions
+                    .map(sp => {
+                        console.log(sp);
+                        console.log(p);
+                        return sp[0] == p[0] && sp[1] == p[1];
+                    })
+                    .reduce((prev, curr) => prev = curr || prev), false
+            })
+            .reduce((prev, curr) => prev = curr || prev, false);
+
+        // reaccionar a colisiÃ³n
+        if (hasCollision) {
+            return this.generateShip(length);
+        }
+    }
+
+    generateAllShips() {
+        for (const length of this.config.ships) {
+            this.shipPositions.push(this.generateShip(length));
+        }
     }
 
     fill_board() {
@@ -62,12 +120,5 @@ class Board {
     }
 }
 
-let board = new Board(5, 8);
+let board = new Board();
 board.init();
-
-while (board.shipfloats) {
-    let x = window.prompt("Ingresa coordenada \"x\": ");
-    let y = window.prompt("Ingresa coordenada \"y\": ");
-    board.check_shot(Number(x),Number(y)); 
-    board.print_board();
-}
