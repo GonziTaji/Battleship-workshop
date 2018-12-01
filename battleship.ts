@@ -101,6 +101,16 @@ class Board {
     }
 
     check_shot(x:number, y:number) {
+    let x = (<HTMLInputElement>document.getElementById("coox")).value;
+    let y = (<HTMLInputElement>document.getElementById("cooy")).value;
+    
+    //coorx = window.prompt("Ingresa coordenada \"x\": ");
+  //  coory = window.prompt("Ingresa coordenada \"y\": ");
+
+    console.log("x :",coorx);
+    console.log("y :",coory);
+
+   
         this.board[x-1][y-1] = "X "
         document.write("<br />");
 
