@@ -112,12 +112,10 @@ class Board {
     }
 
     print_board() {
-        let button = '<button style="width:50px;height:50px;border:1px solid #000;" onmouseover="buttonColor = "grey""></button>';
-        document.body.innerHTML = button;
         for (let r of this.board) {
     
             for (let c of r) {
-                // document.write(c);
+                document.write(c);
             }
     
             document.write("<br />");
@@ -133,6 +131,15 @@ class Board {
             this.shipfloats = false;
         }
     }
+}
+
+var canvas: HTMLCanvasElement;
+var ctx: CanvasRenderingContext2D;
+
+function gameLoop() {
+    requestAnimationFrame(gameLoop);
+    ctx.fillStyle = "black";
+    ctx.fillRect(0, 0, 200, 300);
 }
 
 let board = new Board(5, 8);
