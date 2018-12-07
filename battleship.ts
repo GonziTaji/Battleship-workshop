@@ -48,24 +48,20 @@ class Board {
             positions.push([x, y])
         }
 
-        // detectar colisiÃ³n
-        console.log(this.shipPositions);
+        // detectar colision
+        // FIXME: no funciona
         let hasCollision = this.shipPositions
-            .map(p => {
-                console.log(p);
-                return positions
-                    .map(sp => {
-                        console.log(sp);
-                        console.log(p);
-                        return sp[0] == p[0] && sp[1] == p[1];
-                    })
-                    .reduce((prev, curr) => prev = curr || prev), false
-            })
+            .map(p => 
+                positions
+                    .map(sp => sp[0] == p[0] && sp[1] == p[1])
+                    .reduce((prev, curr) => prev = curr || prev), false)
             .reduce((prev, curr) => prev = curr || prev, false);
 
-        // reaccionar a colisiÃ³n
+        // reaccionar a colision
         if (hasCollision) {
             return this.generateShip(length);
+        } else {
+            return positions;
         }
     }
 
@@ -105,6 +101,16 @@ class Board {
     }
 
     check_shot(x:number, y:number) {
+    let x = (<HTMLInputElement>document.getElementById("coox")).value;
+    let y = (<HTMLInputElement>document.getElementById("cooy")).value;
+    
+    //coorx = window.prompt("Ingresa coordenada \"x\": ");
+  //  coory = window.prompt("Ingresa coordenada \"y\": ");
+
+    console.log("x :",coorx);
+    console.log("y :",coory);
+
+   
         this.board[x-1][y-1] = "X "
         document.write("<br />");
 
