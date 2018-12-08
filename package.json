@@ -4,6 +4,7 @@
   "description": "Primera versión del juego Battleship realizado por el grupo de estudio",
   "main": "battleship.js",
   "scripts": {
+    "build": "webpack"
   },
   "repository": {
     "type": "git",
@@ -13,5 +14,11 @@
   "bugs": {
     "url": "https://github.com/BlueKraken/Battleship-workshop/issues"
   },
-  "homepage": "https://github.com/BlueKraken/Battleship-workshop#readme"
+  "homepage": "https://github.com/BlueKraken/Battleship-workshop#readme",
+  "devDependencies": {
+    "ts-loader": "^5.3.1",
+    "typescript": "^3.2.2",
+    "webpack": "^4.27.1",
+    "webpack-cli": "^3.1.2"
+  }
 }
