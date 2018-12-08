@@ -1,0 +1,17 @@
+{
+  "name": "battleship",
+  "version": "1.0.0",
+  "description": "Primera versión del juego Battleship realizado por el grupo de estudio",
+  "main": "battleship.js",
+  "scripts": {
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/BlueKraken/Battleship-workshop.git"
+  },
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/BlueKraken/Battleship-workshop/issues"
+  },
+  "homepage": "https://github.com/BlueKraken/Battleship-workshop#readme"
+}
