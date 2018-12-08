@@ -1,5 +1,6 @@
 import { randomIntFromInterval } from "./utils";
 import { Cell } from "./cell";
+import { gameConfig } from './gameConfig';
 
 export class Board {
     private rows:number;
@@ -8,11 +9,11 @@ export class Board {
     private ship_y:number;
     private board:HTMLElement[][];
 
-    constructor(rows, columns) {
-        this.rows = rows;
-        this.columns = columns;
-        this.ship_x = randomIntFromInterval(0, columns - 1);
-        this.ship_y = randomIntFromInterval(0, rows - 1);
+    constructor() {
+        this.rows = gameConfig.board.x;
+        this.columns = gameConfig.board.y;
+        this.ship_x = randomIntFromInterval(0, this.columns - 1);
+        this.ship_y = randomIntFromInterval(0, this.rows - 1);
     }
 
     private make_board() {
