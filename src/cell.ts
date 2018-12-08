@@ -1,8 +1,7 @@
 export class Cell {
-    cell: HTMLElement;
-    isShip: boolean;
-    wasClicked: boolean;
-    shipfloats: boolean;
+    private cell: HTMLElement;
+    private isShip: boolean;
+    private wasClicked: boolean;
 
     constructor(isShip:boolean) {
         this.isShip = isShip;
@@ -14,30 +13,25 @@ export class Cell {
         this.cell.onmouseout = () => this.mouseout();
         this.cell.onclick = () => this.mouseclick();
         this.cell.style.backgroundColor = 'white';
-
-        if (isShip) {
-            this.shipfloats = true;
-        }
     }
 
-    mouseover() {
+    private mouseover() {
         if (!this.wasClicked) {
             this.cell.style.backgroundColor = 'green';
         }
     }
 
-    mouseout() {
+    private mouseout() {
         if (!this.wasClicked) {
             this.cell.style.backgroundColor = 'white';
         }
     }
 
-    mouseclick() {
+    private mouseclick() {
         this.wasClicked = true;
 
         if (this.isShip) {
             this.cell.style.backgroundColor = 'grey';
-            this.shipfloats = false;
             document.write("WINNER, WINNER, CHICKEN DINNER!<br />You sunk the ship!");
         } else {
             this.cell.style.backgroundColor = 'blue';
