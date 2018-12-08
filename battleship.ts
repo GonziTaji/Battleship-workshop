@@ -1,130 +1,111 @@
-interface GameConfig {
-    board: {x: number, y: number};
-    ships: Array<number>;
-};
-
-const defaultGameConfig: GameConfig = {
-    board: {x: 10, y: 10},
-    ships: [5, 4, 4, 3, 3, 3, 2,]
-};
-
+//=====Functions=====
 function randomIntFromInterval(min,max) {// min and max included
     return Math.floor(Math.random()*(max-min+1)+min);
 }
+//=====Classes=====
+class Cell {
+    cell: HTMLElement;
+    isShip: boolean;
+    wasClicked: boolean;
+    shipfloats: boolean;
+
+    constructor(isShip:boolean) {
+        this.isShip = isShip;
+        this.wasClicked = false;
+        this.cell = document.createElement('button');
+        this.cell.style.height = '50';
+        this.cell.style.width = '50';
+        this.cell.onmouseover = () => this.mouseover();
+        this.cell.onmouseout = () => this.mouseout();
+        this.cell.onclick = () => this.mouseclick();
+        this.cell.style.backgroundColor = 'white';
+
+        if (isShip) {
+            this.shipfloats = true;
+        }
+    }
+
+    mouseover() {
+        if (!this.wasClicked) {
+            this.cell.style.backgroundColor = 'green';
+        }
+    }
+
+    mouseout() {
+        if (!this.wasClicked) {
+            this.cell.style.backgroundColor = 'white';
+        }
+    }
+
+    mouseclick() {
+        this.wasClicked = true;
+
+        if (this.isShip) {
+            this.cell.style.backgroundColor = 'grey';
+            this.shipfloats = false;
+            document.write("WINNER, WINNER, CHICKEN DINNER!<br />You sunk the ship!");
+        } else {
+            this.cell.style.backgroundColor = 'blue';
+        }
+    }
+}
 
 class Board {
-    get rows(): number {
-        return this.config.board.x;
-    };
-    get columns(): number {
-        return this.config.board.y;
-    };
+    rows:number;
+    columns:number;
     ship_x:number;
     ship_y:number;
-    board:string[][];
-    shipfloats:boolean;
+    board:HTMLElement[][];
 
-    shipPositions: Array<Array<number>> = [];
-    config: GameConfig
-
-    constructor(config: GameConfig = defaultGameConfig) {
-        this.config = config;
-        this.ship_x = randomIntFromInterval(0, this.columns - 1);
-        this.ship_y = randomIntFromInterval(0, this.rows - 1);
+    constructor(rows, columns) {
+        this.rows = rows;
+        this.columns = columns;
+        this.ship_x = randomIntFromInterval(0, columns - 1);
+        this.ship_y = randomIntFromInterval(0, rows - 1);
     }
 
-    generateShip(length: number) {
-        // obtener seed
-        let x = randomIntFromInterval(0, this.rows);
-        let y = randomIntFromInterval(0, this.columns);
-
-        // obtener orientaciÃ³n
-        let axis = randomIntFromInterval(0, 1) == 0 ? x : y;
-        
-        // construir
-        let positions: Array<Array<Number>> = [];
-        for (let i = 0; i < length; i++) {
-            axis++;
-            positions.push([x, y])
-        }
-
-        // detectar colision
-        // FIXME: no funciona
-        let hasCollision = this.shipPositions
-            .map(p => 
-                positions
-                    .map(sp => sp[0] == p[0] && sp[1] == p[1])
-                    .reduce((prev, curr) => prev = curr || prev), false)
-            .reduce((prev, curr) => prev = curr || prev, false);
-
-        // reaccionar a colision
-        if (hasCollision) {
-            return this.generateShip(length);
-        } else {
-            return positions;
-        }
-    }
-
-    generateAllShips() {
-        for (const length of this.config.ships) {
-            this.shipPositions.push(this.generateShip(length));
-        }
-    }
-
-    fill_board() {
-        let b:string[][] = [];
+    make_board() {
+        //empty board structure creation
+        let b:HTMLElement[][] = [];
     
         for (let i = 0; i < this.rows; i++) {
             b.push([]);
         }
         
+        //filling board with Cell()'s
         for (let i = 0; i < this.rows; i++) {
-            
-            for (let j:number = 0; j < this.columns; j++) {
-                b[i].push("O ");
+        
+            for (let j: number = 0; j < this.columns; j++) {
+                let x = j;
+                let y = i;
+                let c;
+                
+                if (x === this.ship_x && y === this.ship_y) {
+                    c = new Cell(true);
+                } else {
+                    c = new Cell(false);
+                }
+
+                b[i].push(c.cell);
             }
         }
     
         this.board = b;
-        this.shipfloats = true;
     }
 
     print_board() {
-        for (let r of this.board) {
-    
-            for (let c of r) {
-                document.write(c);
+
+        for (let row of this.board) {
+            
+            for (let cell of row) {
+                document.body.appendChild(cell);
             }
     
             document.write("<br />");
         }
     }
-
-    check_shot(x:number, y:number) {
-    let x = (<HTMLInputElement>document.getElementById("coox")).value;
-    let y = (<HTMLInputElement>document.getElementById("cooy")).value;
-    
-    //coorx = window.prompt("Ingresa coordenada \"x\": ");
-  //  coory = window.prompt("Ingresa coordenada \"y\": ");
-
-    console.log("x :",coorx);
-    console.log("y :",coory);
-
-   
-        this.board[x-1][y-1] = "X "
-        document.write("<br />");
-
-        if (x === this.ship_x && y === this.ship_y) {
-            document.write("You sunk the ship!")
-            this.shipfloats = false;
-        }
-    }
-
-    init() {
-        this.fill_board();
-        this.print_board();
-    }
 }
-
-let board = new Board();
-board.init();
+//=====MAIN=====
+let board = new Board(5, 5);
+board.make_board();
+board.print_board();
