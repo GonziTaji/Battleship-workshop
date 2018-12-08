@@ -2,11 +2,11 @@ import { randomIntFromInterval } from "./utils";
 import { Cell } from "./cell";
 
 export class Board {
-    rows:number;
-    columns:number;
-    ship_x:number;
-    ship_y:number;
-    board:HTMLElement[][];
+    private rows:number;
+    private columns:number;
+    private ship_x:number;
+    private ship_y:number;
+    private board:HTMLElement[][];
 
     constructor(rows, columns) {
         this.rows = rows;
@@ -15,7 +15,7 @@ export class Board {
         this.ship_y = randomIntFromInterval(0, rows - 1);
     }
 
-    make_board() {
+    private make_board() {
         //empty board structure creation
         let b:HTMLElement[][] = [];
     
@@ -44,7 +44,7 @@ export class Board {
         this.board = b;
     }
 
-    print_board() {
+    private print_board() {
 
         for (let row of this.board) {
             
@@ -54,5 +54,10 @@ export class Board {
     
             document.write("<br />");
         }
+    }
+
+    startGame() {
+        this.make_board();
+        this.print_board();
     }
 }
