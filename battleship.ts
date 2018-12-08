@@ -13,8 +13,8 @@ class Cell {
         this.isShip = isShip;
         this.wasClicked = false;
         this.cell = document.createElement('button');
-        this.cell.style.height = '50';
-        this.cell.style.width = '50';
+        this.cell.style.height = '50px';
+        this.cell.style.width = '50px';
         this.cell.onmouseover = () => this.mouseover();
         this.cell.onmouseout = () => this.mouseout();
         this.cell.onclick = () => this.mouseclick();
