@@ -1,11 +1,11 @@
 export class Cell {
     private cell: HTMLElement;
     private isShip: boolean;
-    private wasClicked: boolean;
+    private wasShot: boolean;
 
     constructor(isShip:boolean) {
         this.isShip = isShip;
-        this.wasClicked = false;
+        this.wasShot = false;
         this.cell = document.createElement('button');
         this.cell.style.height = '50px';
         this.cell.style.width = '50px';
@@ -16,19 +16,19 @@ export class Cell {
     }
 
     select() {
-        if (!this.wasClicked) {
+        if (!this.wasShot) {
             this.cell.style.backgroundColor = 'green';
         }
     }
 
     disselect() {
-        if (!this.wasClicked) {
+        if (!this.wasShot) {
             this.cell.style.backgroundColor = 'white';
         }
     }
 
     fire() {
-        this.wasClicked = true;
+        this.wasShot = true;
 
         if (this.isShip) {
             this.cell.style.backgroundColor = 'grey';
