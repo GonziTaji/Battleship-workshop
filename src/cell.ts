@@ -9,25 +9,25 @@ export class Cell {
         this.cell = document.createElement('button');
         this.cell.style.height = '50px';
         this.cell.style.width = '50px';
-        this.cell.onmouseover = () => this.mouseover();
-        this.cell.onmouseout = () => this.mouseout();
-        this.cell.onclick = () => this.mouseclick();
+        this.cell.onmouseover = () => this.select();
+        this.cell.onmouseout = () => this.disselect();
+        this.cell.onclick = () => this.fire();
         this.cell.style.backgroundColor = 'white';
     }
 
-    private mouseover() {
+    select() {
         if (!this.wasClicked) {
             this.cell.style.backgroundColor = 'green';
         }
     }
 
-    private mouseout() {
+    disselect() {
         if (!this.wasClicked) {
             this.cell.style.backgroundColor = 'white';
         }
     }
 
-    private mouseclick() {
+    fire() {
         this.wasClicked = true;
 
         if (this.isShip) {
