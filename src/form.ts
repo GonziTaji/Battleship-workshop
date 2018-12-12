@@ -1,8 +1,16 @@
-export class Form {
-    private form: HTMLElement;
+import { Board } from "./board";
 
-    constructor() {
+export class Form {
+    form: HTMLElement;
+    private x: number;
+    private y: number;
+    private board: HTMLElement[][];
+
+    constructor(b: HTMLElement[][]) {
         this.form = document.createElement("div");
+        this.x = 1;
+        this.y = 1;
+        this.board = b;
     }
 
     makeForm() {
@@ -16,5 +24,14 @@ export class Form {
             '</form>';
     }
 
+    selectedCoordsByForm() {
+        this.x = Number((<HTMLInputElement>document.getElementById("xFormInput")).value);
+        this.y = Number((<HTMLInputElement>document.getElementById("yFormInput")).value);
+        return [this.x, this.y];
+    }
+
+    shoot() {
+        this.board[this.x][this.y].click();
+    }
     
 }

@@ -1,6 +1,7 @@
 import { randomIntFromInterval } from "./utils";
 import { Cell } from "./cell";
 import { gameConfig } from './gameConfig';
+import { Form } from "./form";
 
 export class Board {
     private rows:number;
@@ -47,6 +48,7 @@ export class Board {
 
     private print_board() {
 
+        let f = new Form(this.board);
         for (let row of this.board) {
             
             for (let cell of row) {
@@ -55,6 +57,7 @@ export class Board {
     
             document.write("<br />");
         }
+        document.body.appendChild(f.form);
     }
 
     startGame() {
