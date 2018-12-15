@@ -1,7 +1,7 @@
 import { Board } from "./board";
 
 export class Form {
-    form: HTMLElement;
+    form : HTMLElement;
     private x: number;
     private y: number;
     private board: HTMLElement[][];
@@ -27,11 +27,11 @@ export class Form {
     selectedCoordsByForm() {
         this.x = Number((<HTMLInputElement>document.getElementById("xFormInput")).value);
         this.y = Number((<HTMLInputElement>document.getElementById("yFormInput")).value);
+		
         return [this.x, this.y];
     }
 
     shoot() {
         this.board[this.x][this.y].click();
-    }
-    
+    }   
 }

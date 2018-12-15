@@ -49,6 +49,7 @@ export class Board {
     private print_board() {
 
         let f = new Form(this.board);
+		
         for (let row of this.board) {
             
             for (let cell of row) {
@@ -57,6 +58,12 @@ export class Board {
     
             document.write("<br />");
         }
+		
+		f.makeForm();
+		
+		Object.assign(window, {selectedCoordsByForm: f.selectedCoordsByForm.bind(f)});
+		Object.assign(window, {shoot: f.shoot.bind(f)});
+		
         document.body.appendChild(f.form);
     }
 
