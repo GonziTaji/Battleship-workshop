@@ -1,5 +1,14 @@
 export class Cell {
-    private cell: HTMLElement;
+    private isShip: boolean;
+    private wasShot: boolean;
+    private isSelect: boolean;
+
+    constructor(isShip: boolean) {
+        this.isShip = isShip;
+        this.wasShot = false;
+        this.isSelect = false;
+    }
+    /*private cell: HTMLElement;
     private isShip: boolean;
     private wasShot: boolean;
 
@@ -36,5 +45,5 @@ export class Cell {
         } else {
             this.cell.style.backgroundColor = 'blue';
         }
-    }
+    }*/
 }
