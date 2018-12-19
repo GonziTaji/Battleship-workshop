@@ -1,6 +1,6 @@
 import { gameConfig } from "./gameConfig";
 import { randomIntFromInterval } from "./utils";
-import { Cell } from "./cell";
+import { Board } from "./board";
 
 
 class Game {
@@ -8,7 +8,9 @@ class Game {
     private columns: number;
     private ship_x: number;
     private ship_y: number;
-    private cellGrid: Cell[][];
+    private isShip: boolean[][];
+    private wasShot: boolean[][]; //***borrar cell.ts probablemente */
+
 
     constructor() {
         this.rows = gameConfig.board.x;
@@ -17,9 +19,26 @@ class Game {
         this.ship_y = randomIntFromInterval(0, this.rows - 1);
     }
 
-    private make_board() {
+    private makeBoard() {
+        this.isShip = [];
+        this.wasShot = [];
+        for (let i = 0; i < this.columns; i++) {
+            this.isShip.push([]);
+            this.wasShot.push([]);
+            for (let j = 0; j < this.rows; j++) {
+                if (i === this.ship_x && j === this.ship_y) {
+                    this.isShip[i].push(true);
+                }
+                else {
+                    this.isShip[i].push(false);
+                }
+                this.wasShot[i].push(false);
+            }
+        }
+
+
         //empty board structure creation
-        let cg: Cell[][] = [];
+        /*let cg: Cell[][] = [];
     
         for (let i = 0; i < this.rows; i++) {
             cg.push([]);
@@ -43,10 +62,16 @@ class Game {
             }
         }
     
-        this.cellGrid = cg;
+        this.cellGrid = cg;*/
+
     }
 
     startGame() {
-        this.make_board();
+        this.makeBoard();
+        Board.printBoard(this.rows, this.columns);
+    }
+
+    select(x: number, y: number) {
+        Board.reloadBoard(this.rows, this.columns, x, y, this.wasShot);
     }
 }

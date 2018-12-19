@@ -1,12 +1,12 @@
 export class Cell {
-    private isShip: boolean;
-    private wasShot: boolean;
-    private isSelect: boolean;
+    isShip: boolean;
+    wasShot: boolean;
+    isSel: boolean;
 
     constructor(isShip: boolean) {
         this.isShip = isShip;
         this.wasShot = false;
-        this.isSelect = false;
+        this.isSel = false;
     }
     /*private cell: HTMLElement;
     private isShip: boolean;

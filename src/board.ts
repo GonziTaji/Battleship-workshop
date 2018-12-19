@@ -1,12 +1,14 @@
+import { idToString } from "./utils";
+
 export class Board {
     
-    static print_board(rows: number, columns: number) {
+    static printBoard(rows: number, columns: number) {
 		
         for (let i = 0; i < columns; i++) {
             
             for (let j = 0; j< rows; j++) {
                 let c = document.createElement('button');
-                let id = String(i) + "," + String(j);
+                let id = idToString(i, j);
                 c.style.height = '50px';
                 c.style.width = '50px';
                 c.style.backgroundColor = 'white';
@@ -18,10 +20,31 @@ export class Board {
         }
     }
 
-    static reload_board() {
+    static reloadBoard(rows: number, columns: number, xSel: number, ySel: number, wasShot: boolean[][]) {
+        let idSel = idToString(xSel, ySel);
+        let cSel = document.getElementById(idSel);
+        for (let i = 0; i < columns; i++) {
 
+            for (let j = 0; j < rows; j++) {
+                let id = idToString(i, j);
+                let cell = document.getElementById(id);
+                if (wasShot[i][j]) {
+                    cell.style.backgroundColor = 'blue';
+                }
+                else {
+                    cell.style.backgroundColor = 'white';
+                }
+            }
+
+        }
+        if (!wasShot[xSel][ySel]) { //Si la celda seleccionada no fue disparada se selecciona
+            cSel.style.backgroundColor = 'green';
+        }
     }
+
 }
+
+
 
 /*export class Board {
     private rows:number;
