@@ -32,7 +32,7 @@ export class Cell {
 
         if (this.isShip) {
             this.cell.style.backgroundColor = 'grey';
-            document.write("WINNER, WINNER, CHICKEN DINNER!<br />You sunk the ship!");
+            document.body.insertAdjacentText("afterend", "WINNER, WINNER, CHICKEN DINNER! You sunk the ship!");
         } else {
             this.cell.style.backgroundColor = 'blue';
         }

@@ -1,7 +1,7 @@
 export const gameConfig = {
     board: {
-        x: 10,
-        y: 10
+        x: 3,
+        y: 3
     },
     ships: [
         5,

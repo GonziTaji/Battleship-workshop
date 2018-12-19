@@ -18,9 +18,9 @@ export class Board {
     }
 
     private make_board() {
-        //empty board structure creation
+        //empty board creation
         let b:HTMLElement[][] = [];
-    
+        //turning board into matrix
         for (let i = 0; i < this.rows; i++) {
             b.push([]);
         }
@@ -47,8 +47,6 @@ export class Board {
     }
 
     private print_board() {
-
-        let f = new Form(this.board);
 		
         for (let row of this.board) {
             
@@ -58,12 +56,11 @@ export class Board {
     
             document.write("<br />");
         }
-		
+        
+        let f = new Form(this.board);
 		f.makeForm();
-		
 		Object.assign(window, {selectedCoordsByForm: f.selectedCoordsByForm.bind(f)});
 		Object.assign(window, {shoot: f.shoot.bind(f)});
-		
         document.body.appendChild(f.form);
     }
 
