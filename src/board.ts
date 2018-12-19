@@ -1,9 +1,29 @@
-import { randomIntFromInterval } from "./utils";
-import { Cell } from "./cell";
-import { gameConfig } from './gameConfig';
-import { Form } from "./form";
-
 export class Board {
+    
+    static print_board(rows: number, columns: number) {
+		
+        for (let i = 0; i < columns; i++) {
+            
+            for (let j = 0; j< rows; j++) {
+                let c = document.createElement('button');
+                let id = String(i) + "," + String(j);
+                c.style.height = '50px';
+                c.style.width = '50px';
+                c.style.backgroundColor = 'white';
+                c.setAttribute("id", id);
+                document.body.appendChild(c);
+            }
+    
+            document.write("<br />");
+        }
+    }
+
+    static reload_board() {
+
+    }
+}
+
+/*export class Board {
     private rows:number;
     private columns:number;
     private ship_x:number;
@@ -71,4 +91,4 @@ export class Board {
         this.make_board();
         this.print_board();
     }
-}
+}*/
