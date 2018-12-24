@@ -13,12 +13,12 @@ export class Game {
         new UserInterface(this.positions, this.onShoot.bind(this));
     }
 
-    public onShoot(x: number, y: number): boolean {
+    public onShoot(x: number, y: number) {
         let positionShot = this.positions[x][y];
 
         positionShot.wasShot = true;
+        
         console.log(`shot to ${positionShot.isShip ? 'ship' : 'water'}`);
-        return positionShot.isShip;
     }
 
     private initPositions() {
