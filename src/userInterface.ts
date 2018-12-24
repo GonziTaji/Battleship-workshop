@@ -1,6 +1,6 @@
 import { BoardCell } from "./boardCell";
 
-export class Board {
+export class UserInterface {
     private positionsContainer: HTMLDivElement;
     private boardPositions: BoardCell[][];
     private selectedRow: number = 0;
@@ -11,14 +11,14 @@ export class Board {
         this.positionsContainer = document.createElement('div');
         document.body.append(this.positionsContainer);
               
+        this.shootHandler = shotCallback;
+        this.boardPositions = positions;
+
         this.renderBoard(positions, shotCallback);
         this.renderForm();
     }
 
     private renderBoard(positions: BoardCell[][], shotCallback: (x: number, y: number) => any) {
-        this.shootHandler = shotCallback;
-        this.boardPositions = positions;
-
         this.positionsContainer.innerHTML = "";
 
         positions.map((row, x) => 

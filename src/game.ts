@@ -1,7 +1,7 @@
 import { randomIntFromInterval } from "./utils";
 import {BoardCell } from './boardCell';
 import { gameConfig } from "./gameConfig";
-import { Board } from "./board";
+import { UserInterface } from "./userInterface";
 
 export class Game {
     private positions: BoardCell[][];
@@ -10,7 +10,7 @@ export class Game {
     constructor() {
         this.initPositions();
 
-        new Board(this.positions, this.onShoot.bind(this));
+        new UserInterface(this.positions, this.onShoot.bind(this));
     }
 
     public onShoot(x: number, y: number): boolean {
