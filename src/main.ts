@@ -1,4 +1,3 @@
-import { Board } from './board';
+import { Game } from "./game";
 
-let board = new Board();
-board.startGame();
+const game = new Game();
