@@ -2,10 +2,11 @@ import { randomIntFromInterval } from "./utils";
 import {BoardCell } from './boardCell';
 import { gameConfig } from "./gameConfig";
 import { UserInterface } from "./userInterface";
+import { Point } from "./types";
 
 export class Game {
     private positions: BoardCell[][];
-    private shipReferences: Coordinates[][];
+    private shipReferences: Point[][];
 
     constructor() {
         this.initPositions();
@@ -17,7 +18,7 @@ export class Game {
         let positionShot = this.positions[x][y];
 
         positionShot.wasShot = true;
-        
+
         console.log(`shot to ${positionShot.isShip ? 'ship' : 'water'}`);
     }
 
@@ -35,7 +36,7 @@ export class Game {
         this.shipReferences = [];
 
         gameConfig.shipLengths.forEach((length, index) => {
-            let ship: Array<Coordinates>;
+            let ship: Array<Point>;
             do {
                 ship = generateRandomShip(length);
 
@@ -46,7 +47,7 @@ export class Game {
         });
     }
 
-    private validateShip(ship: Array<Coordinates>) 
+    private validateShip(ship: Array<Point>) 
     {
         // 1. check for ship outside boundaries
         // 2. check for ship coliding with other ships
@@ -68,13 +69,8 @@ export class Game {
     }
 }
 
-interface Coordinates {
-    x: number,
-    y: number
-}
-
 function generateRandomShip(length: number) {
-    let ship: Array<Coordinates> = [];
+    let ship: Array<Point> = [];
     
     let seed = {
         x: randomIntFromInterval(0, gameConfig.board.columns - 1),
