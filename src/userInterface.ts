@@ -1,5 +1,6 @@
 import { BoardCell } from "./boardCell";
 import { gameConfig } from "./gameConfig";
+import { Point } from "./types";
 
 export class UserInterface {
     private positionsContainer: HTMLDivElement;
@@ -7,7 +8,7 @@ export class UserInterface {
     private selectedRow: number = 0;
     private selectedColumn: number = 0;
 
-    constructor(positions: BoardCell[][], shotCallback: (x: number, y: number) => any) {
+    constructor(positions: BoardCell[][], shotCallback: (p: Point) => any) {
         this.positionsContainer = document.createElement('div');
         document.body.append(this.positionsContainer);
 
@@ -15,19 +16,21 @@ export class UserInterface {
         this.renderForm();
     }
 
-    private renderBoard(positions: BoardCell[][], shotCallback: (x: number, y: number) => any) {
+    private renderBoard(positions: BoardCell[][], shotCallback: (p: Point) => any) {
         this.positionsContainer.innerHTML = "";
         this.boardPositions = [];
 
         positions.map((row, x) => 
             row.map((cell, y) => 
-                boardCellElement(cell, () => shotCallback(x, y))
+                boardCellElement(cell, () => shotCallback({ x, y }))
             )
         )
         .forEach(row => {
             const rowContainer = document.createElement('div');
+            
             rowContainer.style.height = row[0].style.height;
             rowContainer.append(...row);
+
             this.boardPositions.push(row);
             this.positionsContainer.appendChild(rowContainer);
         });
@@ -79,7 +82,7 @@ export class UserInterface {
             shootButton)
     }
 
-    selectFromForm(deselect = false) {
+    private selectFromForm(deselect = false) {
         const eventName = deselect ? 'mouseleave' : 'mouseenter'
 
         this.boardPositions[this.selectedColumn][this.selectedRow]

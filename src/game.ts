@@ -14,8 +14,8 @@ export class Game {
         new UserInterface(this.positions, this.onShoot.bind(this));
     }
 
-    public onShoot(x: number, y: number) {
-        let positionShot = this.positions[x][y];
+    public onShoot(p: Point) {
+        let positionShot = this.positions[p.x][p.y];
 
         positionShot.wasShot = true;
 
