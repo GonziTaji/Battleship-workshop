@@ -9,7 +9,7 @@ export class UserInterface {
     private selectedColumn: number = 0;
 
     private get selectedCell() {
-        return this.boardPositions[this.selectedColumn][this.selectedRow];
+        return this.boardPositions[this.selectedRow][this.selectedColumn];
     }
 
     constructor(positions: BoardCell[][], shotCallback: (p: Point) => any) {
@@ -50,6 +50,8 @@ export class UserInterface {
         columnselectionInput.type = "number";
         rowSelectionInput.max = gameConfig.board.rows.toString();
         columnselectionInput.max = gameConfig.board.columns.toString();
+        rowSelectionInput.min = "0";
+        columnselectionInput.min = "0";
 
         rowSelectionInput.oninput = e => 
             this.onSelectedRowChanged((e.target as HTMLInputElement).value);
@@ -72,19 +74,19 @@ export class UserInterface {
         let value = 0;
         switch (e.key) {
             case "ArrowRight":
-                value = this.selectedColumn+1;
+                value = this.selectedColumn + 1;
                 this.onSelectedColumnChanged(value.toString());
                 break;
             case "ArrowLeft":
-                value = this.selectedColumn-1;
+                value = this.selectedColumn - 1;
                 this.onSelectedColumnChanged(value.toString());
                 break;
             case "ArrowDown":
-                value = this.selectedRow+1;
+                value = this.selectedRow + 1;
                 this.onSelectedRowChanged(value.toString());
                 break;
             case "ArrowUp":
-                value = this.selectedRow-1;
+                value = this.selectedRow - 1;
                 this.onSelectedRowChanged(value.toString());
                 break;
             case "Enter":
