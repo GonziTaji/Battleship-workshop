@@ -8,6 +8,9 @@ export class UserInterface {
     private selectedRow: number = 0;
     private selectedColumn: number = 0;
 
+    private rowSelectionInput: HTMLInputElement;
+    private columnSelectionInput: HTMLInputElement;
+
     private get selectedCell() {
         return this.boardPositions[this.selectedRow][this.selectedColumn];
     }
@@ -43,50 +46,55 @@ export class UserInterface {
     }
 
     private renderForm() {
-        const rowSelectionInput = document.createElement('input');
-        const columnselectionInput = document.createElement('input');
+        this.rowSelectionInput = document.createElement('input');
+        this.columnSelectionInput = document.createElement('input');
         
-        rowSelectionInput.type = "number";
-        columnselectionInput.type = "number";
-        rowSelectionInput.max = gameConfig.board.rows.toString();
-        columnselectionInput.max = gameConfig.board.columns.toString();
-        rowSelectionInput.min = "0";
-        columnselectionInput.min = "0";
+        this.rowSelectionInput.type = "number";
+        this.columnSelectionInput.type = "number";
+        this.rowSelectionInput.max = gameConfig.board.rows.toString();
+        this.columnSelectionInput.max = gameConfig.board.columns.toString();
+        this.rowSelectionInput.min = "0";
+        this.columnSelectionInput.min = "0";
+        this.rowSelectionInput.value = "0";
+        this.columnSelectionInput.value = "0";
 
-        rowSelectionInput.oninput = e => 
-            this.onSelectedRowChanged((e.target as HTMLInputElement).value);
+        this.rowSelectionInput.oninput = _ => 
+            this.onSelectedRowChanged(this.rowSelectionInput.value);
 
-        columnselectionInput.oninput = e => {
-            this.onSelectedColumnChanged((e.target as HTMLInputElement).value);
-        }
+        this.columnSelectionInput.oninput = _ =>
+            this.onSelectedColumnChanged(this.columnSelectionInput.value);
 
         const shootButton = document.createElement('button');
         shootButton.innerText = "Dispara!"
         shootButton.onclick = () => this.selectedCell.click();
 
         document.body.append(
-            'X:', columnselectionInput, 
-            'Y:', rowSelectionInput, 
+            'X:', this.columnSelectionInput, 
+            'Y:', this.rowSelectionInput, 
             shootButton);
     }
 
     private handleKeyboardInput(e: KeyboardEvent) {
-        let value = 0;
+        let value: string;
         switch (e.key) {
             case "ArrowRight":
-                value = this.selectedColumn + 1;
+                value = (this.selectedColumn + 1).toString();
+                this.columnSelectionInput.value = value.toString();
                 this.onSelectedColumnChanged(value.toString());
                 break;
             case "ArrowLeft":
-                value = this.selectedColumn - 1;
+                value = (this.selectedColumn - 1).toString();
+                this.columnSelectionInput.value = value.toString();
                 this.onSelectedColumnChanged(value.toString());
                 break;
             case "ArrowDown":
-                value = this.selectedRow + 1;
+                value = (this.selectedRow + 1).toString();
+                this.rowSelectionInput.value = value.toString();
                 this.onSelectedRowChanged(value.toString());
                 break;
             case "ArrowUp":
-                value = this.selectedRow - 1;
+                value = (this.selectedRow - 1).toString();
+                this.rowSelectionInput.value = value.toString();
                 this.onSelectedRowChanged(value.toString());
                 break;
             case "Enter":
@@ -110,6 +118,7 @@ export class UserInterface {
     }
 
     private onSelectedColumnChanged(value: string) {
+        console.log("e");
         this.selectFromForm(true);
         
         const parsedValue = parseInt(value);
@@ -135,7 +144,7 @@ export class UserInterface {
         const defaultBg = "white";
         const selectedBg = "yellow";
         const shotBg = cell.isShip ? "red" : "blue";
-    
+
         const element = document.createElement('div');
     
         element.style.display = "inline-block";
