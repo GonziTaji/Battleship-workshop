@@ -1,4 +1,5 @@
-export class BoardCell {
-    wasShot: boolean = false;
+export class Cell {
+    public wasShot: boolean = false;
+
     constructor(public isShip: boolean) {}
 }

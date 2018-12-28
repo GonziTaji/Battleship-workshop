@@ -1,4 +1,4 @@
-import { BoardCell } from "./boardCell";
+import { Cell } from "./boardCell";
 import { gameConfig } from "./gameConfig";
 import { Point } from "./types";
 
@@ -15,7 +15,7 @@ export class UserInterface {
         return this.boardPositions[this.selectedRow][this.selectedColumn];
     }
 
-    constructor(positions: BoardCell[][], shotCallback: (p: Point) => any) {
+    constructor(positions: Cell[][], shotCallback: (p: Point) => any) {
         this.positionsContainer = document.createElement('div');
         document.body.append(this.positionsContainer);
         
@@ -25,7 +25,7 @@ export class UserInterface {
         document.onkeydown = this.handleKeyboardInput.bind(this);
     }
 
-    private renderBoard(positions: BoardCell[][], shotCallback: (p: Point) => any) {
+    private renderBoard(positions: Cell[][], shotCallback: (p: Point) => any) {
         this.positionsContainer.innerHTML = "";
         this.boardPositions = [];
 
@@ -138,7 +138,7 @@ export class UserInterface {
         this.selectedCell.dispatchEvent(new Event(eventName));
     }
 
-    private createBoardCellElement(cell: BoardCell, onClick: () => void) {
+    private createBoardCellElement(cell: Cell, onClick: () => void) {
         const cellWidth = "30px";
         const cellHeight = "30px";
         const defaultBg = "white";
