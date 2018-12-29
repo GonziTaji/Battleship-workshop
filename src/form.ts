@@ -1,7 +1,42 @@
-import { Board } from "./board";
+import { idToString } from "./utils";
+import { Game } from "./game";
+
 
 export class Form {
-    form : HTMLElement;
+
+    private x: number;  //coordenadas seleccionadas
+    private y: number;
+    private rows: number;
+    private columns: number;
+    private game: Game;
+
+    constructor(rows: number, columns: number, game: Game) {
+        this.rows = rows;
+        this.columns = columns;
+        this.game = game;
+    }
+
+    makeTriggers() {
+        for (let i = 0; i < this.columns; i++) {
+            for (let j = 0; j < this.rows; j++) {
+                let id = idToString(i, j);
+                document.getElementById(id).onmouseover = () => this.select(i, j);
+                document.getElementById(id).onclick = () => this.shoot();
+            }
+        }
+    }
+
+    private select(x: number, y: number) {
+        this.x = x;
+        this.y = y;
+        this.game.select(x, y);
+    }
+
+    private shoot() {
+        this.game.shoot(this.x, this.y);
+    }
+
+    /*form : HTMLElement;
     private x: number;
     private y: number;
     private board: HTMLElement[][];
@@ -33,5 +68,5 @@ export class Form {
 
     shoot() {
         this.board[this.x][this.y].click();
-    }   
+    }*/
 }

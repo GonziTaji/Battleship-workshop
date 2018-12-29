@@ -8,7 +8,7 @@ export class Board {
             
             for (let j = 0; j< rows; j++) {
                 let c = document.createElement('button');
-                let id = idToString(i, j);
+                let id = idToString(j,i);
                 c.style.height = '50px';
                 c.style.width = '50px';
                 c.style.backgroundColor = 'white';
@@ -20,7 +20,7 @@ export class Board {
         }
     }
 
-    static reloadBoard(rows: number, columns: number, xSel: number, ySel: number, wasShot: boolean[][]) {
+    static reloadBoard(rows: number, columns: number, xSel: number, ySel: number, wasShot: boolean[][], wasHit: boolean[][]) {
         let idSel = idToString(xSel, ySel);
         let cSel = document.getElementById(idSel);
         for (let i = 0; i < columns; i++) {
@@ -34,12 +34,19 @@ export class Board {
                 else {
                     cell.style.backgroundColor = 'white';
                 }
+                if (wasHit[i][j]) {
+                    cell.style.backgroundColor = 'grey';
+                }
             }
 
         }
         if (!wasShot[xSel][ySel]) { //Si la celda seleccionada no fue disparada se selecciona
             cSel.style.backgroundColor = 'green';
         }
+    }
+
+    static win() {
+        alert("WINNER, WINNER, CHICKEN DINNER!<br />You sunk the ship!");
     }
 
 }

@@ -1,4 +1,4 @@
-import { Board } from './board';
+import { Game } from './game';
 
-let board = new Board();
-board.startGame();
+let game = new Game();
+game.startGame();
