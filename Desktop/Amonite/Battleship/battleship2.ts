@@ -103,6 +103,7 @@ function play(key) {
     let prevChar = board.target(x, y);
     document.body.innerHTML = '';
     board.print_board();
+    document.addEventListener('keypress', e => play(e.keyCode));
 }
 
 let board = new Board(5, 8);
